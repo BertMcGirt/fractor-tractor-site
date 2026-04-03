@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Fractor Tractor</title>
+  <meta name="description" content="Simple, transparent pricing for Fractor Tractor. Start free and upgrade as your collection grows.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .pricing-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 48px;
+      font-size: 0.95rem;
+      color: var(--color-gray-500);
+    }
+    .pricing-toggle__label--active { color: var(--color-primary); font-weight: 600; }
+    .pricing-toggle__switch {
+      position: relative;
+      width: 52px;
+      height: 28px;
+    }
+    .pricing-toggle__switch input { opacity: 0; width: 0; height: 0; }
+    .pricing-toggle__slider {
+      position: absolute;
+      inset: 0;
+      background: var(--color-gray-200);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .pricing-toggle__slider::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .pricing-toggle__switch input:checked + .pricing-toggle__slider {
+      background: var(--color-accent);
+    }
+    .pricing-toggle__switch input:checked + .pricing-toggle__slider::after {
+      transform: translateX(24px);
+    }
+    .pricing-toggle__save {
+      background: rgba(34,197,94,0.1);
+      color: var(--color-success);
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .faq { max-width: 700px; margin: 0 auto; }
+    .faq__item {
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+    .faq__question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-primary);
+    }
+    .faq__question::after {
+      content: '+';
+      font-size: 1.3rem;
+      color: var(--color-gray-300);
+      transition: var(--transition);
+    }
+    .faq__item.open .faq__question::after {
+      content: '\2212';
+      color: var(--color-accent);
+    }
+    .faq__answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .faq__item.open .faq__answer {
+      max-height: 200px;
+    }
+    .faq__answer p {
+      padding-bottom: 20px;
+      color: var(--color-gray-500);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">FT</div>
+        Fractor Tractor
+      </a>
+      <div class="nav__links">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="#" class="btn btn--primary nav__cta">Get Early Access</a>
+      </div>
+      <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="hero" style="min-height:auto;padding:160px 0 80px;">
+    <div class="container" style="text-align:center;">
+      <div class="hero__content" style="max-width:640px;margin:0 auto;">
+        <span class="hero__badge">Simple Pricing</span>
+        <h1 style="color:var(--color-white);">Plans That Grow <span>With Your Collection</span></h1>
+        <p class="hero__subtitle" style="margin:16px auto 0;">Start free. Upgrade when you need more. No surprises, no hidden fees.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section>
+    <div class="container">
+      <!-- Toggle -->
+      <div class="pricing-toggle">
+        <span class="pricing-toggle__label pricing-toggle__label--active">Monthly</span>
+        <label class="pricing-toggle__switch">
+          <input type="checkbox" id="pricingToggle">
+          <span class="pricing-toggle__slider"></span>
+        </label>
+        <span class="pricing-toggle__label">Yearly</span>
+        <span class="pricing-toggle__save">Save 20%</span>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Free -->
+        <div class="pricing-card">
+          <div class="pricing-card__name">Starter</div>
+          <div class="pricing-card__price">Free</div>
+          <div class="pricing-card__desc">Perfect for getting started and trying out Fractor Tractor.</div>
+          <ul class="pricing-card__features">
+            <li>Up to 100 cards</li>
+            <li>1 collection</li>
+            <li>Photo uploads (5 MB limit)</li>
+            <li>Basic eBay search</li>
+            <li>Public sharing</li>
+          </ul>
+          <a href="#" class="btn btn--outline">Get Started Free</a>
+        </div>
+
+        <!-- Pro -->
+        <div class="pricing-card pricing-card--featured">
+          <div class="pricing-card__badge">Most Popular</div>
+          <div class="pricing-card__name">Pro</div>
+          <div class="pricing-card__price" data-monthly="$9.99" data-yearly="$95.88">$9.99<span data-period>/mo</span></div>
+          <div class="pricing-card__desc">For serious collectors who want full control and market intelligence.</div>
+          <ul class="pricing-card__features">
+            <li>Unlimited cards</li>
+            <li>Unlimited collections</li>
+            <li>HD photo uploads (50 MB limit)</li>
+            <li>Advanced eBay search + price history</li>
+            <li>Grade verification badges</li>
+            <li>Portfolio value tracking</li>
+            <li>Price alerts (10 active)</li>
+            <li>Private & selective sharing</li>
+            <li>CSV import/export</li>
+          </ul>
+          <a href="#" class="btn btn--primary">Start Pro Trial</a>
+        </div>
+
+        <!-- Dealer -->
+        <div class="pricing-card">
+          <div class="pricing-card__name">Dealer</div>
+          <div class="pricing-card__price" data-monthly="$29.99" data-yearly="$287.88">$29.99<span data-period>/mo</span></div>
+          <div class="pricing-card__desc">For dealers and power sellers managing large inventories.</div>
+          <ul class="pricing-card__features">
+            <li>Everything in Pro</li>
+            <li>Unlimited price alerts</li>
+            <li>Bulk operations & batch editing</li>
+            <li>Custom branding on shared links</li>
+            <li>API access (coming soon)</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#" class="btn btn--outline">Contact Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section--gray">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__label">FAQ</span>
+        <h2>Common Questions</h2>
+      </div>
+      <div class="faq">
+        <div class="faq__item">
+          <div class="faq__question">Can I try Pro before committing?</div>
+          <div class="faq__answer"><p>Yes! Every new account gets a 14-day free trial of Pro with full access to all features. No credit card required.</p></div>
+        </div>
+        <div class="faq__item">
+          <div class="faq__question">What happens to my cards if I downgrade?</div>
+          <div class="faq__answer"><p>Your cards are always safe. If you downgrade from Pro to Starter, you'll retain read access to all your cards. You just won't be able to add new ones beyond the Starter limit until you upgrade again.</p></div>
+        </div>
+        <div class="faq__item">
+          <div class="faq__question">How does eBay search work?</div>
+          <div class="faq__answer"><p>We connect directly to eBay's Browse API to pull live market data. When you search for a card, we show you current listings, recent sold prices, and market trends — all in real time.</p></div>
+        </div>
+        <div class="faq__item">
+          <div class="faq__question">Can I cancel anytime?</div>
+          <div class="faq__answer"><p>Absolutely. There are no contracts or cancellation fees. You can cancel your subscription at any time from your account settings, and you'll retain access through the end of your billing period.</p></div>
+        </div>
+        <div class="faq__item">
+          <div class="faq__question">Do you support grading services other than PSA?</div>
+          <div class="faq__answer"><p>Yes! We support PSA, BGS (Beckett), SGC, CGC, and more. You can log grades from any grading service and they'll display on your cards.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Start Your Free Trial Today</h2>
+        <p>No credit card required. Try Pro free for 14 days.</p>
+        <a href="#" class="btn btn--primary btn--large">Get Early Access</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="nav__logo" style="margin-bottom:4px;">
+            <div class="nav__logo-icon">FT</div>
+            Fractor Tractor
+          </div>
+          <p>The digital home for your sports card and trading card collection. Organize, verify, value, and share — all in one place.</p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul class="footer__links">
+            <li><a href="features.html">Features</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="#">Roadmap</a></li>
+            <li><a href="#">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul class="footer__links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul class="footer__links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 Trimultaneously LLC. All rights reserved.</span>
+        <span>Built with care for collectors.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
