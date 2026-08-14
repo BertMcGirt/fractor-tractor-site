@@ -105,7 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
     pricingToggle.addEventListener('change', () => {
       const isYearly = pricingToggle.checked;
       document.querySelectorAll('[data-monthly]').forEach(el => {
-        el.textContent = isYearly ? el.dataset.yearly : el.dataset.monthly;
+        // Update only the leading text node so the <span data-period> child survives
+        el.firstChild.textContent = isYearly ? el.dataset.yearly : el.dataset.monthly;
       });
       document.querySelectorAll('[data-period]').forEach(el => {
         el.textContent = isYearly ? '/yr' : '/mo';
