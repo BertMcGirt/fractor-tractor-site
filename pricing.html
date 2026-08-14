@@ -61,6 +61,30 @@
       font-weight: 700;
     }
 
+    .pricing-card--coming-soon > *:not(.coming-soon-stamp) {
+      opacity: 0.45;
+    }
+    .pricing-card--coming-soon .btn { pointer-events: none; }
+    .coming-soon-stamp {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-14deg);
+      border: 4px solid var(--color-accent);
+      color: var(--color-accent);
+      background: var(--color-white);
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 10px 22px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-card);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 2;
+    }
+
     .faq { max-width: 700px; margin: 0 auto; }
     .faq__item {
       border-bottom: 1px solid var(--color-gray-100);
@@ -158,8 +182,8 @@
           <ul class="pricing-card__features">
             <li>Up to 100 cards</li>
             <li>1 collection</li>
-            <li>Photo uploads (5 MB limit)</li>
-            <li>Basic eBay search</li>
+            <li>Photo uploads</li>
+            <li>Basic pricing tracking</li>
             <li>Public sharing</li>
           </ul>
           <a href="#" class="btn btn--outline">Get Started Free</a>
@@ -174,19 +198,21 @@
           <ul class="pricing-card__features">
             <li>Unlimited cards</li>
             <li>Unlimited collections</li>
-            <li>HD photo uploads (50 MB limit)</li>
-            <li>Advanced eBay search + price history</li>
-            <li>Grade verification badges</li>
+            <li>HD photo uploads</li>
+            <li>Import eBay purchases</li>
+            <li>AI card scanning and detection</li>
+            <li>Unlimited Fractor Tractor Verifications</li>
             <li>Portfolio value tracking</li>
             <li>Price alerts (10 active)</li>
             <li>Private & selective sharing</li>
-            <li>CSV import/export</li>
+            <li>CSV export</li>
           </ul>
           <a href="#" class="btn btn--primary">Start Pro Trial</a>
         </div>
 
         <!-- Dealer -->
-        <div class="pricing-card">
+        <div class="pricing-card pricing-card--coming-soon">
+          <div class="coming-soon-stamp" aria-hidden="true">Coming Soon</div>
           <div class="pricing-card__name">Dealer</div>
           <div class="pricing-card__price" data-monthly="$29.99" data-yearly="$287.88">$29.99<span data-period>/mo</span></div>
           <div class="pricing-card__desc">For dealers and power sellers managing large inventories.</div>
@@ -198,7 +224,7 @@
             <li>API access (coming soon)</li>
             <li>Priority support</li>
           </ul>
-          <a href="#" class="btn btn--outline">Contact Sales</a>
+          <a class="btn btn--outline" aria-disabled="true">Coming Soon</a>
         </div>
       </div>
     </div>
@@ -221,8 +247,8 @@
           <div class="faq__answer"><p>Your cards are always safe. If you downgrade from Pro to Starter, you'll retain read access to all your cards. You just won't be able to add new ones beyond the Starter limit until you upgrade again.</p></div>
         </div>
         <div class="faq__item">
-          <div class="faq__question">How does eBay search work?</div>
-          <div class="faq__answer"><p>We connect directly to eBay's Browse API to pull live market data. When you search for a card, we show you current listings, recent sold prices, and market trends — all in real time.</p></div>
+          <div class="faq__question">How does the eBay purchase import work?</div>
+          <div class="faq__answer"><p>Connect your eBay account and Fractor Tractor pulls in the cards you've purchased, matching them to our card database automatically — no manual data entry needed to get your collection up to date.</p></div>
         </div>
         <div class="faq__item">
           <div class="faq__question">Can I cancel anytime?</div>
