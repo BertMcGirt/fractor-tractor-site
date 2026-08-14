@@ -60,11 +60,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const formData = new FormData(contactForm);
       const data = Object.fromEntries(formData);
 
-      // For now, just show a success message
-      // Replace this with your actual form submission logic (e.g., SendGrid, Firebase, etc.)
+      // Open the visitor's email client with the message pre-filled.
+      // (No backend required — replace with a form service or Pages Function later if desired.)
+      const subject = encodeURIComponent('[Fractor Tractor] ' + data.subject);
+      const body = encodeURIComponent(
+        'Name: ' + data.name + '\nEmail: ' + data.email + '\n\n' + data.message
+      );
+      window.location.href =
+        'mailto:albert@trimultaneously.com?subject=' + subject + '&body=' + body;
+
       const btn = contactForm.querySelector('.btn');
       const originalText = btn.textContent;
-      btn.textContent = 'Message Sent!';
+      btn.textContent = 'Opening your email app…';
       btn.style.background = '#22c55e';
       btn.style.borderColor = '#22c55e';
 
@@ -72,8 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.textContent = originalText;
         btn.style.background = '';
         btn.style.borderColor = '';
-        contactForm.reset();
-      }, 3000);
+      }, 4000);
     });
   }
 
