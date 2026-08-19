@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support — Fractor Tractor</title>
+  <meta name="description" content="Get help with Fractor Tractor. Submit a support ticket and our team will respond within 24 hours.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .ticket-panel {
+      background: var(--color-white);
+      border: 2px solid var(--color-gray-200);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .ticket-status {
+      display: none;
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .ticket-status--error {
+      display: block;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #991b1b;
+    }
+    .ticket-status--error a { color: #991b1b; font-weight: 600; }
+
+    .ticket-confirmation {
+      display: none;
+      text-align: center;
+      padding: 8px 0 4px;
+    }
+    .ticket-confirmation--visible { display: block; }
+    .ticket-confirmation__check {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(34,197,94,0.12);
+      color: var(--color-success);
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .ticket-confirmation h2 { margin-bottom: 10px; }
+    .ticket-confirmation p {
+      color: var(--color-gray-500);
+      font-size: 0.98rem;
+      line-height: 1.7;
+      max-width: 460px;
+      margin: 0 auto 12px;
+    }
+    .ticket-reference {
+      display: inline-block;
+      background: var(--color-off-white);
+      border: 1px dashed var(--color-gray-300);
+      border-radius: var(--radius-sm);
+      padding: 14px 28px;
+      margin: 12px 0 20px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: var(--color-primary);
+    }
+    .ticket-reference__label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-gray-500);
+      margin-bottom: 4px;
+    }
+
+    .form__select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--color-gray-200);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-family: var(--font-body);
+      background: var(--color-white);
+      color: var(--color-primary);
+      transition: var(--transition);
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7280' d='M1.4 0 6 4.6 10.6 0 12 1.4 6 7.4 0 1.4z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+    .form__select:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(240,165,0,0.1);
+    }
+    .form__hint {
+      font-size: 0.82rem;
+      color: var(--color-gray-500);
+      margin-top: 6px;
+    }
+    .form__honeypot {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .support-hours {
+      background: var(--color-off-white);
+      border-radius: var(--radius-sm);
+      padding: 24px;
+      margin-top: 8px;
+    }
+
+    .faq { max-width: 100%; }
+    .faq__item { border-bottom: 1px solid var(--color-gray-100); }
+    .faq__question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 0;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.98rem;
+      color: var(--color-primary);
+    }
+    .faq__question::after {
+      content: '+';
+      font-size: 1.3rem;
+      color: var(--color-gray-300);
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .faq__item.open .faq__question::after {
+      content: '\2212';
+      color: var(--color-accent);
+    }
+    .faq__answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq__item.open .faq__answer { max-height: 260px; }
+    .faq__answer p {
+      padding-bottom: 18px;
+      color: var(--color-gray-500);
+      font-size: 0.93rem;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <div class="nav__logo-icon">FT</div>
+        Fractor Tractor
+      </a>
+      <div class="nav__links">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="support.html" class="active">Support</a>
+        <a href="#" class="btn btn--primary nav__cta">Get Early Access</a>
+      </div>
+      <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="hero" style="min-height:auto;padding:160px 0 80px;">
+    <div class="container" style="text-align:center;">
+      <div class="hero__content" style="max-width:640px;margin:0 auto;">
+        <span class="hero__badge">Support</span>
+        <h1 style="color:var(--color-white);">How Can We <span>Help?</span></h1>
+        <p class="hero__subtitle" style="margin:16px auto 0;">Submit a ticket and our team will get back to you within 24 hours. Every ticket gets a reference number you can follow up with.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ticket Form -->
+  <section>
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Form / Confirmation -->
+        <div>
+          <div class="ticket-panel">
+            <!-- Shown only if a submission fails -->
+            <div class="ticket-status" id="ticketError" role="alert"></div>
+
+            <!-- Shown only after the server confirms delivery -->
+            <div class="ticket-confirmation" id="ticketConfirmation" role="status" aria-live="polite">
+              <div class="ticket-confirmation__check">&#10003;</div>
+              <h2>Your ticket was sent</h2>
+              <p>We've received your request and emailed a copy to our support team. Hold on to your reference number:</p>
+              <div class="ticket-reference">
+                <span class="ticket-reference__label">Ticket Reference</span>
+                <span id="ticketReference">FT-000000</span>
+              </div>
+              <p>We reply to every ticket within 24 hours, at the email address you gave us. If you need to add anything, just reply to our response or quote this reference.</p>
+              <button type="button" class="btn btn--outline" id="ticketReset" style="margin-top:8px;">Submit Another Ticket</button>
+            </div>
+
+            <!-- The form itself -->
+            <div id="ticketFormWrap">
+              <h2 style="margin-bottom:8px;">Submit a Support Ticket</h2>
+              <p style="color:var(--color-gray-500);font-size:0.95rem;margin-bottom:24px;">Tell us what's going on and we'll take it from there.</p>
+              <form id="supportForm" novalidate>
+                <div class="form__group">
+                  <label class="form__label" for="supportName">Full Name</label>
+                  <input class="form__input" type="text" id="supportName" name="name" placeholder="Your name" maxlength="100" required>
+                </div>
+                <div class="form__group">
+                  <label class="form__label" for="supportEmail">Email Address</label>
+                  <input class="form__input" type="email" id="supportEmail" name="email" placeholder="you@example.com" maxlength="200" required>
+                  <p class="form__hint">We'll send our reply here — please double-check it.</p>
+                </div>
+                <div class="form__group">
+                  <label class="form__label" for="supportCategory">What do you need help with?</label>
+                  <select class="form__select" id="supportCategory" name="category" required>
+                    <option value="Account &amp; Login">Account &amp; Login</option>
+                    <option value="Billing &amp; Subscription">Billing &amp; Subscription</option>
+                    <option value="Card Verification">Card Verification</option>
+                    <option value="Card Data &amp; Pricing">Card Data &amp; Pricing</option>
+                    <option value="Bug Report">Bug Report</option>
+                    <option value="Feature Request">Feature Request</option>
+                    <option value="Privacy Request">Privacy Request</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="form__group">
+                  <label class="form__label" for="supportSubject">Subject</label>
+                  <input class="form__input" type="text" id="supportSubject" name="subject" placeholder="A one-line summary" maxlength="150" required>
+                </div>
+                <div class="form__group">
+                  <label class="form__label" for="supportMessage">Description</label>
+                  <textarea class="form__textarea" id="supportMessage" name="message" placeholder="What happened, what you expected, and any steps to reproduce it..." maxlength="5000" required></textarea>
+                </div>
+                <div class="form__group">
+                  <label class="form__label" for="supportVersion">App Version <span style="font-weight:400;color:var(--color-gray-500);">(optional)</span></label>
+                  <input class="form__input" type="text" id="supportVersion" name="appVersion" placeholder="e.g. iOS 1.2.0" maxlength="50">
+                  <p class="form__hint">Found in the app under Settings &rarr; About.</p>
+                </div>
+                <div class="form__honeypot" aria-hidden="true">
+                  <label for="supportCompany">Company</label>
+                  <input type="text" id="supportCompany" name="company" tabindex="-1" autocomplete="off">
+                </div>
+                <button type="submit" class="btn btn--primary" style="width:100%;" id="supportSubmit">Submit Ticket</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help Info -->
+        <div>
+          <h2 style="margin-bottom:24px;">Before You Write In</h2>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">&#9201;</div>
+            <div>
+              <div class="contact-info__label">Response Time</div>
+              <div class="contact-info__value">We answer every ticket within 24 hours. Reports of objectionable content or abuse are reviewed first, generally within 24 hours.</div>
+            </div>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">&#128273;</div>
+            <div>
+              <div class="contact-info__label">Account &amp; Deletion</div>
+              <div class="contact-info__value">You can delete your account in the app under Settings &rarr; Account &rarr; Delete Account. See our <a href="privacy.html" style="color:var(--color-accent);">Privacy Policy</a> for what happens to your data.</div>
+            </div>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">&#128179;</div>
+            <div>
+              <div class="contact-info__label">Subscriptions</div>
+              <div class="contact-info__value">Pro subscriptions are billed through your Apple App Store account. Manage or cancel them in your device's App Store settings; refunds are handled by Apple.</div>
+            </div>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon">&#9993;</div>
+            <div>
+              <div class="contact-info__label">Email Us Directly</div>
+              <div class="contact-info__value"><a href="mailto:albert@trimultaneously.com" style="color:var(--color-accent);">albert@trimultaneously.com</a></div>
+            </div>
+          </div>
+
+          <div class="support-hours">
+            <p style="font-weight:600;color:var(--color-primary);margin-bottom:4px;">Operated by</p>
+            <p style="color:var(--color-gray-500);margin:0;font-size:0.95rem;">Trimultaneously LLC &middot; <a href="https://fractortractor.com" style="color:var(--color-accent);">fractortractor.com</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Common Questions -->
+  <section class="section--gray">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__label">Quick Answers</span>
+        <h2>Common Support Questions</h2>
+      </div>
+      <div style="max-width:760px;margin:0 auto;">
+        <div class="faq">
+          <div class="faq__item">
+            <div class="faq__question">Which trading card games are supported?</div>
+            <div class="faq__answer"><p>Fractor Tractor supports entertainment trading card games — Pokémon, Magic: The Gathering, Yu-Gi-Oh!, Disney Lorcana, One Piece, and more. We do not currently support sports cards.</p></div>
+          </div>
+          <div class="faq__item">
+            <div class="faq__question">How do I cancel my Pro subscription?</div>
+            <div class="faq__answer"><p>Pro is billed through Apple. Open your device's Settings, tap your name, then Subscriptions, and cancel Fractor Tractor there. Your Pro features stay active until the end of the period you've already paid for. Refund requests go through Apple.</p></div>
+          </div>
+          <div class="faq__item">
+            <div class="faq__question">My card was rejected during verification. Why?</div>
+            <div class="faq__answer"><p>Verification photos must be captured live in the app, show the whole card, and be sharp enough to read the card name and number. Blurry photos, screenshots, and images from your camera roll are rejected. Submit a ticket with your card name and we'll tell you exactly what went wrong.</p></div>
+          </div>
+          <div class="faq__item">
+            <div class="faq__question">A card's price or details look wrong.</div>
+            <div class="faq__answer"><p>Market values come from third-party marketplace data and are informational only — never an appraisal. If a card is matched to the wrong set or printing, send us a ticket with the card name and we'll correct the database entry.</p></div>
+          </div>
+          <div class="faq__item">
+            <div class="faq__question">How do I report another user or their content?</div>
+            <div class="faq__answer"><p>Use the report and block controls in the app on any card, collection, or profile. We review reports promptly — generally within 24 hours — and remove content that breaks our <a href="terms.html" style="color:var(--color-accent);">Terms of Service</a>.</p></div>
+          </div>
+          <div class="faq__item">
+            <div class="faq__question">How do I make a privacy request?</div>
+            <div class="faq__answer"><p>Choose "Privacy Request" as the category above, or email us with "Privacy Request" in the subject line. See our <a href="privacy.html" style="color:var(--color-accent);">Privacy Policy</a> for the rights available to you.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="nav__logo" style="margin-bottom:4px;">
+            <div class="nav__logo-icon">FT</div>
+            Fractor Tractor
+          </div>
+          <p>The digital home for your trading card game collection. Organize, verify, value, and share — all in one place.</p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul class="footer__links">
+            <li><a href="features.html">Features</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul class="footer__links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="support.html">Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul class="footer__links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 Trimultaneously LLC. All rights reserved.</span>
+        <span>Built with care for collectors.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
