@@ -644,6 +644,13 @@ section {
 .cta-banner h2 { color: var(--color-white); margin-bottom: 16px; position: relative; }
 .cta-banner p { color: var(--color-gray-300); font-size: 1.1rem; margin-bottom: 32px; position: relative; }
 .cta-banner .btn { position: relative; }
+.cta-banner__actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
 
 /* --- Contact Form --- */
 .contact-grid {
