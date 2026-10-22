@@ -65,6 +65,10 @@ async function handleSubmission(request, env) {
     return json({ ok: false, error: 'invalid_request', message: 'Could not read the submitted form.' }, 400);
   }
 
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    return json({ ok: false, error: 'invalid_request', message: 'Could not read the submitted form.' }, 400);
+  }
+
   // Honeypot: a real person never fills this hidden field in.
   if (clean(payload.company, 100)) {
     return json({ ok: false, error: 'rejected', message: 'Submission rejected.' }, 400);

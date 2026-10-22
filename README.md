@@ -56,6 +56,21 @@ Just open any `.html` file in your browser, or run a local server:
 npx serve .
 ```
 
+## Tests
+
+Run the dependency-free support form and API regression tests with Node.js 20+:
+
+```bash
+node --test tests/*.test.mjs
+node --check js/main.js
+node --check --input-type=module < functions/api/support.js
+```
+
+The tests cover plain-text error rendering, malformed responses and requests,
+the prefilled email fallback, retry/reset UX, and mocked provider success/failure.
+They do not send email, use real credentials, or replace browser/Cloudflare
+integration testing. There is no build or lint toolchain for this static site.
+
 ## Deployment
 
 This site is deployed via **Cloudflare Pages**, connected to this GitHub repo. Every push to `main` triggers an automatic deployment.
