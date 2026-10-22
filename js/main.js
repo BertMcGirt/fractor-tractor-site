@@ -95,13 +95,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const SUPPORT_EMAIL = 'albert@trimultaneously.com';
 
-    const showError = (html) => {
-      errorBox.innerHTML = html;
+    const showError = (message, fallbackData) => {
+      // Server messages are untrusted text, never markup. Build the only link
+      // ourselves so ticket contents cannot become HTML or change its target.
+      errorBox.textContent = message;
+      if (fallbackData) {
+        const link = document.createElement('a');
+        link.href = mailtoFallback(fallbackData);
+        link.textContent = 'email it to us directly';
+        errorBox.append(' Please ', link, ' and we’ll pick it up from there.');
+      }
       errorBox.classList.add('ticket-status--error');
       errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     };
     const clearError = () => {
-      errorBox.innerHTML = '';
+      errorBox.textContent = '';
       errorBox.classList.remove('ticket-status--error');
     };
 
@@ -144,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const result = await response.json().catch(() => ({}));
 
-        if (response.ok && result.ok && result.ticketId) {
+        if (response.ok && result?.ok === true && typeof result.ticketId === 'string' && result.ticketId.trim()) {
           referenceEl.textContent = result.ticketId;
           formWrap.style.display = 'none';
           confirmation.classList.add('ticket-confirmation--visible');
@@ -154,13 +162,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         showError(
-          (result.message || 'We couldn’t submit your ticket just now.') +
-          ' Please <a href="' + mailtoFallback(data) + '">email it to us directly</a> and we’ll pick it up from there.'
+          typeof result?.message === 'string' && result.message.trim()
+            ? result.message
+            : 'We couldn’t submit your ticket just now.',
+          data
         );
       } catch (err) {
         showError(
-          'We couldn’t reach our servers — check your connection, or ' +
-          '<a href="' + mailtoFallback(data) + '">email your ticket to us directly</a>.'
+          'We couldn’t reach our servers — check your connection.',
+          data
         );
       } finally {
         submitBtn.disabled = false;
